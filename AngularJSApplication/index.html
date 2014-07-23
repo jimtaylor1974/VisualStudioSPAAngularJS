@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <style>
+        [ng-cloak] {
+            display: none;
+        }
+    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title ng-bind="title">My AngularJS Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/app/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="app/css/app.css" />
+</head>
+<body ng-controller="ApplicationCtrl" ng-cloak>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <p class="navbar-brand" ng-if="!loggedIn">Application Name</p>
+                <a href="#/home" class="navbar-brand" ng-if="loggedIn">Application Name</a>
+            </div>
+            <div ng-if="loggedIn" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/home">Home</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <span class="navbar-text nofloat">Hello, <a href="#/manage" class="navbar-link">{{name}}</a>!</span>
+                    </li>
+                    <li><a href="#" ng-click="logOff()">Log off</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="padding-error">
+            <p class="text-danger" ng-repeat="error in errors">{{error}}</p>
+        </div>
+        <div data-ng-view></div>
+        <hr />
+        <footer>
+            <p>&copy; {{year}} - My AngularJS Application</p>
+        </footer>
+    </div>
+    <script data-main="app/js/main" src="/app/bower_components/requirejs/require.js"></script>
+</body>
+</html>

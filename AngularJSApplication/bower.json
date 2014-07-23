@@ -1,0 +1,21 @@
+{
+  "name": "angular-requirejs-seed",
+  "version": "0.2.0",
+  "ignore": [
+    "**/.*",
+    "app/bower_components"
+  ],
+  "devDependencies": {
+    "angular": "~1.2.1",
+    "angular-animate": "~1.2.1",
+    "angular-scenario": "~1.2.1",
+    "angular-route": "~1.2.1",
+    "angular-mocks": "~1.2.1",
+    "requirejs": "~2.1.14",
+    "requirejs-text": "~2.0.10",
+	"bootstrap": "~3.1.1",
+    "jquery": "~2.1.1",
+    "jquery-ui": "~1.11.0",
+    "requirejs-domready": "*"
+  }
+}

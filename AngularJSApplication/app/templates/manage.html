@@ -1,0 +1,118 @@
+﻿<div ng-if="loading">Loading...</div>
+<div ng-if="!loading">
+    <p class="text-success" ng-if="message.length > 0">{{message}}</p>
+    <h2>Manage Account</h2>
+    <section>
+        <div ng-if="hasLocalPassword()">
+            <p class="text-info">You're logged in as <strong>{{name}}</strong>.</p>
+            <form class="form-horizontal" role="form" name="changePasswordForm" ng-init="setFormScope('changePasswordForm', this)" novalidate>
+                <h4>Change your password</h4>
+                <hr />
+                <ul class="text-danger" ng-if="changePassword.errors.length > 0">
+                    <li ng-repeat="error in changePassword.errors">{{error}}</li>
+                </ul>
+                <div class="form-group">
+                    <label for="ChangePasswordOldPassword" class="col-md-2 control-label">Old password</label>
+                    <div class="col-md-10">
+                        <input type="password" id="ChangePasswordOldPassword" class="form-control" ng-model="changePassword.oldPassword" ng-required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ChangePasswordNewPassword" class="col-md-2 control-label">New password</label>
+                    <div class="col-md-10">
+                        <input type="password" id="ChangePasswordNewPassword" class="form-control" ng-model="changePassword.newPassword" ng-required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ChangePasswordConfirmPassword" class="col-md-2 control-label">Confirm new password</label>
+                    <div class="col-md-10">
+                        <input type="password" id="ChangePasswordConfirmPassword" class="form-control" ng-model="changePassword.confirmPassword" password-verify="changePassword.newPassword" ng-required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default" ng-click="changePassword.change()" ng-disabled="changePassword.changing || changePasswordForm.$invalid">Change password</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div ng-if="!hasLocalPassword()">
+            <p>You do not have a local username/password for this site. Add a local account so you can log in without an external login.</p>
+            <form class="form-horizontal" role="form" name="localPasswordForm" ng-init="setFormScope('localPasswordForm', this)" novalidate>
+                <h4>Create Local Login</h4>
+                <hr />
+                <ul class="text-danger" ng-if="setPassword.errors.length > 0">
+                    <li ng-repeat="error in setPassword.errors">{{error}}</li>
+                </ul>
+                <div class="form-group">
+                    <label for="SetPasswordNewPassword" class="col-md-2 control-label">New password</label>
+                    <div class="col-md-10">
+                        <input type="password" id="SetPasswordNewPassword" class="form-control" ng-model="setPassword.newPassword" ng-required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="SetPasswordConfirmPassword" class="col-md-2 control-label">Confirm new password</label>
+                    <div class="col-md-10">
+                        <input type="password" id="SetPasswordConfirmPassword" class="form-control" ng-model="setPassword.confirmPassword" password-verify="setPassword.newPassword" ng-required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default" ng-click="setPassword.set()" ng-disabled="setting || localPasswordForm.$invalid">Set password</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section>
+        <ul class="text-danger" ng-if="errors.length > 0">
+            <li ng-repeat="error in errors">{{error}}</li>
+        </ul>
+        <div ng-if="logins.length > 0">
+            <h4>Registered logins</h4>
+            <table class="table">
+                <tbody>
+                    <tr ng-repeat="login in logins">
+                        <td>{{login.loginProvider}}</td>
+                        <td>
+                            <div ng-if="canRemoveLogin()">
+                                <form>
+                                    <div>
+                                        <button type="submit" 
+                                                class="btn btn-default"
+                                                ng-click="removeLogin(login)"
+                                                title="Remove this {{login.loginProvider}} credential from your account"
+                                                ng-disabled="removingLogin">
+                                            Remove
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <span ng-if="!canRemoveLogin()">&nbsp;</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>Add an external login</h2>
+        <div ng-if="!hasExternalLogin()">
+            <p>
+                There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=313242">this article</a>
+                for details on setting up this ASP.NET application to support logging in via external services.
+            </p>
+        </div>
+        <form class="form-horizontal" role="form" ng-if="hasExternalLogin()">
+            <h4>Use another service to log in.</h4>
+            <hr />
+            <p>
+                <button ng-repeat="externalLoginProvider in externalLoginProviders"
+                        type="submit"
+                        class="btn btn-default"
+                        title="Log in using your {{externalLoginProvider.name}} account"
+                        ng-click="login(externalLoginProvider)">
+                    {{externalLoginProvider.name}}
+                </button>
+            </p>
+        </form>
+    </section>
+</div>
